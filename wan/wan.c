@@ -52,8 +52,8 @@ uint8_t* build_frame(uint32_t devaddr, uint8_t port_number, uint8_t * data, uint
     frame[OFF_DAT_HDR] = HDR_FTYPE_DAUP | HDR_MAJOR_V1; //LoraWAN v1 +  sending unconfirmed data up
     frame[OFF_DAT_FCT] = (end-OFF_DAT_OPTS); //TODO: not sure whether correct frame control field - they are setting acknowledgement request, but do we need this?
     os_wlsbf4(frame+OFF_DAT_ADDR,  devaddr); //Copy the address
-    os_wlsbf2(frame+OFF_DAT_SEQNO, seqnoUp);
-    frame[end]= port_number;
+    os_wlsbf2(frame+OFF_DAT_SEQNO, seqnoUp); //Put sequence counter in the frame
+    frame[end]= port_number; //Put the port number
     os_copyMem(frame+end+1, data, dlen); //Add payload to message
     //Not sure why they use seqnoUp-1 instead of just seqnoUp
     //Not sure why if writing to MAC port 0 we use nwkKey
