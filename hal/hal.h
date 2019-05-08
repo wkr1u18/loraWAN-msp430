@@ -7,7 +7,7 @@
 
 #ifndef HAL_HAL_H_
 #define HAL_HAL_H_
-
+#include <stdint.h>
 #define DELAY_MICROS(t) (__delay_cycles(8* (uint32_t) t))
 #define DELAY_MILIS(t) (__delay_cycles(8000* (uint32_t) t))
 

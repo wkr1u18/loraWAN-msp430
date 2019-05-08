@@ -1,5 +1,6 @@
 #include "driverlib.h"
 #include "hal.h"
+#include "lora.h"
 
 void main(void)
 {
@@ -8,11 +9,7 @@ void main(void)
     hal_init();
     PMM_unlockLPM5();
 
-    //Reset Radio
-    hal_pin_rst(0);
-    DELAY_MILIS(100);
-    hal_pin_rst(2);
-    DELAY_MILIS(5);
+    init_lora();
 
     while(1) {
         hal_pin_nss(0);
