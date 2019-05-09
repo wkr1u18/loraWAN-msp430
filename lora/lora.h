@@ -9,7 +9,7 @@
 #define LORA_LORA_H_
 
 void init_lora();
-
+void txlora();
 
 
 #endif /* LORA_LORA_H_ */

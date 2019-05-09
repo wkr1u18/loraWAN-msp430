@@ -129,6 +129,8 @@ struct osjob_t {
 TYPEDEF_xref2osjob_t;
 
 
+void lmic_aes_encrypt(unsigned char *Data, unsigned char *Key);
+
 #ifndef HAS_os_calls
 
 #ifndef os_getDevKey

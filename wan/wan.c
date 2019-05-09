@@ -9,12 +9,58 @@
 #include "oslmic.h"
 
 uint32_t seqnoUp;
-
+uint8_t frame [MAX_LEN_FRAME] = {0};
 void init_wan() {
     //Initialise uplink counter to 0
     //In the future the value should be persistent - fetch from memory instead of setting to 0
     seqnoUp=0;
 }
+
+#if !defined(os_rlsbf2)
+u2_t os_rlsbf2 (xref2cu1_t buf) {
+    return (u2_t)((u2_t)buf[0] | ((u2_t)buf[1]<<8));
+}
+#endif
+
+#if !defined(os_rlsbf4)
+u4_t os_rlsbf4 (xref2cu1_t buf) {
+    return (u4_t)((u4_t)buf[0] | ((u4_t)buf[1]<<8) | ((u4_t)buf[2]<<16) | ((u4_t)buf[3]<<24));
+}
+#endif
+
+
+#if !defined(os_rmsbf4)
+u4_t os_rmsbf4 (xref2cu1_t buf) {
+    return (u4_t)((u4_t)buf[3] | ((u4_t)buf[2]<<8) | ((u4_t)buf[1]<<16) | ((u4_t)buf[0]<<24));
+}
+#endif
+
+
+#if !defined(os_wlsbf2)
+void os_wlsbf2 (xref2u1_t buf, u2_t v) {
+    buf[0] = v;
+    buf[1] = v>>8;
+}
+#endif
+
+#if !defined(os_wlsbf4)
+void os_wlsbf4 (xref2u1_t buf, u4_t v) {
+    buf[0] = v;
+    buf[1] = v>>8;
+    buf[2] = v>>16;
+    buf[3] = v>>24;
+}
+#endif
+
+#if !defined(os_wmsbf4)
+void os_wmsbf4 (xref2u1_t buf, u4_t v) {
+    buf[3] = v;
+    buf[2] = v>>8;
+    buf[1] = v>>16;
+    buf[0] = v>>24;
+}
+#endif
+
 
 static void micB0 (u4_t devaddr, u4_t seqno, int dndir, int len) {
     os_clearMem(AESaux,16);
@@ -45,7 +91,6 @@ static void aes_cipher (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xre
 }
 
 uint8_t* build_frame(uint32_t devaddr, uint8_t port_number, uint8_t * data, uint8_t dlen, uint8_t * nwkKey, uint8_t * artKey) {
-    uint8_t frame [MAX_LEN_FRAME] = {0};
     int end = OFF_DAT_OPTS;
     //Here normally goes piggyback through additional fields
 
