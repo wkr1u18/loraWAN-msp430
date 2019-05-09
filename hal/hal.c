@@ -1,6 +1,6 @@
 #include "driverlib.h"
-#include "../hal/spi.h"
-#include "../hal/hal.h"
+#include "spi.h"
+#include "hal.h"
 
 void init_clock() {
     //Set DCO frequency to max DCO setting

@@ -1,5 +1,5 @@
 #include "driverlib.h"
-#include "../hal/spi.h"
+#include "spi.h"
 
 void init_spi() {
     /*
