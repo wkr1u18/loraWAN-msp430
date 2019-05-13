@@ -17,7 +17,7 @@ void hal_init(void);
 void hal_pin_nss(uint8_t val);
 void hal_pin_rxtx (uint8_t val);
 void hal_pin_rst (uint8_t val);
-
+void hal_debug_led(uint8_t val);
 uint8_t hal_spi(uint8_t outval);
 
 #endif /* HAL_HAL_H_ */

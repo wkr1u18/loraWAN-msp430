@@ -61,7 +61,6 @@ void os_wmsbf4 (xref2u1_t buf, u4_t v) {
 }
 #endif
 
-
 static void micB0 (u4_t devaddr, u4_t seqno, int dndir, int len) {
     os_clearMem(AESaux,16);
     AESaux[0]  = 0x49;

@@ -8,10 +8,6 @@
 #ifndef LORA_LORA_H_
 #define LORA_LORA_H_
 
-<<<<<<< HEAD
-void init_lora();
-void txlora();
-=======
 #include "hal.h"
 #include "oslmic.h"
 
@@ -126,7 +122,6 @@ void txlora();
 // #define RegPllLowPn                                0x5E // common
 // #define RegFormerTemp                              0x6C // common
 // #define RegBitRateFrac                             0x70 // common
->>>>>>> branch 'master' of https://github.com/wkr1u18/loraWAN-msp430.git
 
 // ----------------------------------------
 
@@ -174,13 +169,12 @@ void txlora();
 void init_lora ();
 static void opmode (uint8_t);
 static void starttx ();
-static void txlora ();
 static void writeReg (uint8_t addr, uint8_t data );
 static uint8_t readReg (uint8_t addr);
 static void writeBuf (uint8_t addr, uint8_t* buf, uint8_t len);
 static void readBuf (uint8_t addr, uint8_t* buf, uint8_t len);
 static void opmodeLora ();
-static void txlora (uint8_t * frame_ptr, uint8_t len);
+void txlora (uint8_t * frame_ptr, uint8_t len);
 static void configLoraModem ();
 static void configChannel ();
 static void configPower ();

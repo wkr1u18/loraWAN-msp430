@@ -16,6 +16,14 @@ void init_io(void) {
             GPIO_PORT_P7,
             GPIO_PIN3
     );
+
+    //DEBUG led
+    GPIO_setAsOutputPin(
+            GPIO_PORT_P1,
+            GPIO_PIN0
+    );
+
+
     //NSS is high on default
     GPIO_setOutputHighOnPin(
             GPIO_PORT_P7,
@@ -77,6 +85,21 @@ void hal_pin_rxtx (uint8_t val) {
         GPIO_setOutputLowOnPin(
                 GPIO_PORT_P7,
                 GPIO_PIN5
+        );
+    }
+}
+
+void hal_debug_led(uint8_t val) {
+    if(val==0) {
+        GPIO_setOutputLowOnPin(
+                GPIO_PORT_P1,
+                GPIO_PIN0
+        );
+    }
+    else {
+        GPIO_setOutputHighOnPin(
+                GPIO_PORT_P1,
+                GPIO_PIN0
         );
     }
 }
