@@ -5,11 +5,10 @@
  *      Author: wkr1u18
  */
 
-#include "lorabase.h"
-#include "oslmic.h"
+#include "wan.h"
 
 uint32_t seqnoUp;
-uint8_t frame [MAX_LEN_FRAME] = {0};
+
 void init_wan() {
     //Initialise uplink counter to 0
     //In the future the value should be persistent - fetch from memory instead of setting to 0
@@ -89,7 +88,7 @@ static void aes_cipher (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xre
     os_aes(AES_CTR, payload, len);
 }
 
-uint8_t* build_frame(uint32_t devaddr, uint8_t port_number, uint8_t * data, uint8_t dlen, uint8_t * nwkKey, uint8_t * artKey) {
+void build_frame(uint8_t *frame, uint32_t devaddr, uint8_t port_number, uint8_t * data, uint8_t dlen, uint8_t * nwkKey, uint8_t * artKey) {
     int end = OFF_DAT_OPTS;
     //Here normally goes piggyback through additional fields
 
@@ -105,7 +104,6 @@ uint8_t* build_frame(uint32_t devaddr, uint8_t port_number, uint8_t * data, uint
     aes_cipher(port_number==0 ? nwkKey : artKey,
                      devaddr, seqnoUp,
                      /*up*/0, frame+end+1, dlen);
-    aes_appendMic(nwkKey, devaddr, seqnoUp, /*up*/0, frame, dlen+1);
+    aes_appendMic(nwkKey, devaddr, seqnoUp, /*up*/0, frame, end+dlen+1);
     seqnoUp++; //Should we deal with 32-bit overflow?
-    return frame;
 }

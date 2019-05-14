@@ -68,8 +68,8 @@ static void opmodeLora() {
 }
 
 static void configLoraModem (){
-    writeReg(LORARegModemConfig1, 0b00001010);
-    writeReg(LORARegModemConfig2, 0b01110000);
+    writeReg(LORARegModemConfig1, 0b01001011);
+    writeReg(LORARegModemConfig2, 0b11000000);
 }
 static void configChannel (){
 
@@ -78,6 +78,8 @@ static void configChannel (){
     writeReg(RegFrfLsb, (u1_t)0x00);
 }
 static void configPower (){
+    writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
+    writeReg(RegPaConfig, 0x80 | 15); // max power
 
 }
 
