@@ -68,15 +68,18 @@ static void opmodeLora() {
 }
 
 static void configLoraModem (){
-    writeReg(LORARegModemConfig1, 0b01001011);
-    writeReg(LORARegModemConfig2, 0b11000000);
+    writeReg(LORARegModemConfig1, 0b00001010);
+    writeReg(LORARegModemConfig2, 0b10010000);
 }
-static void configChannel (){
 
-    writeReg(RegFrfMsb, (u1_t)0xD7);
-    writeReg(RegFrfMid, (u1_t)0x00);
-    writeReg(RegFrfLsb, (u1_t)0x00);
+static void configChannel () {
+    // set frequency: FQ = (FRF * 32 Mhz) / (2 ^ 19)
+    uint64_t frf = ((uint64_t)867300000 << 19) / 32000000;
+    writeReg(RegFrfMsb, (u1_t)(frf>>16));
+    writeReg(RegFrfMid, (u1_t)(frf>> 8));
+    writeReg(RegFrfLsb, (u1_t)(frf>> 0));
 }
+
 static void configPower (){
     writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
     writeReg(RegPaConfig, 0x80 | 15); // max power

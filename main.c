@@ -35,6 +35,5 @@ void main(void)
     uint8_t txlen = 13+dlen;
 
     txlora(frame, txlen);
-
 }
 
